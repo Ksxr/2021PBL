@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-bvelnk3z*u(cfpu-)6bye*+ur6+^%l4vg-67(3+e$=30w5%r^#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cab5154172a84647b907b2929a05d404.vfs.cloud9.us-east-2.amazonaws.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -78,10 +78,19 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'moticom',
+        'USER': '2021PBL',
+        'PASSWORD': 'moticom_okuhara',
+        'HOST': '',
+        'PORT': '',
+        'OPTIONS': {
+           'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+         }
     }
 }
+
+
 
 
 # Password validation
