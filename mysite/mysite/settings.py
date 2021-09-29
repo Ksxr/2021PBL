@@ -136,4 +136,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-X_FRAME_OPTIONS = 'ALLOW'
+X_FRAME_OPTIONS = 'ON'

@@ -1,34 +1,31 @@
+{% extends 'moticom/base.html' %}
+
 {% load i18n static %}
-<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" style="height: 100%;">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="{% static 'moticom/css/bootstrap.min.css' %}">
-    </head>
+
+{% block content %}
     <body>
         <script src="{% static 'moticom/js/chart.js' %}"></script>
         <div class="container">
             <h2 class="mt-4 border-bottom">ダッシュボード</h2>
-            <div style="width: 200px; height:200px">
-                <canvas id="myChart1" width="200px" height="200px"></canvas>
+            <div style="width: 500px; height:400px">
+                <canvas id="monthly" width="500px" height="400px"></canvas>
                     <script>
-                        var ctx = document.getElementById('myChart1').getContext('2d');
+                        const label_list =  JSON.parse('{{ graph_date_list|safe }}')
+                        const data_list = JSON.parse('{{ graph_data_list|safe }}')
+                        var ctx = document.getElementById('monthly').getContext('2d');
                         var chart = new Chart(ctx, {
                         // The type of chart we want to create
-                        type: 'bar',
-    
+                        type: 'line',
                         // The data for our dataset
                         data: {
-                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                            labels: label_list,
                             datasets: [{
                                 label: '',
                                 backgroundColor: 'rgb(255, 99, 0)',
                                 borderColor: 'rgb(255, 99, 132)',
-                                data: [0, 10, 5, 100, 20, 30, 45]
+                                data: data_list
                             }]
                         },
-    
                         // Configuration options go here
                         options: {}
                     });
@@ -50,8 +47,7 @@
                             投稿がありません
                         </p>
                 {% endif %}
-                
             </div>
         </div>
     </body>
-</html>
+{% endblock content %}

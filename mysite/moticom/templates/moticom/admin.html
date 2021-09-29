@@ -1,17 +1,72 @@
-{% extends "moticom/admin_base.html" %}
+{% extends 'moticom/base.html' %}
 
-{% block extra_css %}
-<style type="text/css">
-    #analysis {background: rgb(255, 0, 0);}
-</style>
-{% endblock %}
-
-{% block title %}Moticom{% endblock title %}
+{% load i18n static %}
 
 {% block content %}
-    <div class="container">
-        <h2 class="mt-4 border-bottom">分析結果</h2>
-        <div></div>
-        <h2 class="mt-2 border-bottom pb-2">管理策一覧</h2>
-    </div> 
+    <!-- ページの共有レイアウト -->
+    <body style="height: 100%; margin: 0;">
+        <!-- ヘッダー -->
+        <header class="d-flex sticky-top" style="height: 40px; margin: 0; background-color:rgb(255, 150, 128);">
+            <h2 class="text-white ms-3">Moticom</h2>
+        </header>
+        <!-- サイドバー＋ページ内容領域（内容は別HTMLファイルに書く） -->
+        <main style="display:flex; height: 100%; margin-top: 0;">
+            <!-- サイドバー -->
+            <div class="d-flex align-items-start" id="sidebar-tabs" style="width:250px; height: 100%; background-color:rgb(255, 150, 128);">
+                <div class="nav flex-column nav-pills text-white w-100" role="tablist" aria-orientation="vertical" style="position: sticky; top: 40px;">
+                    <hr>
+                    <a class="nav-link active text-white" id="sidebar-analysis-tab" data-bs-toggle="pill" href="#sidebar-analysis" role="tab" aria-controls="sidebar-analysis" aria-selected="true">
+                        分析結果
+                    </a>
+                    <a class="nav-link text-white" id="sidebar-user-tab" data-bs-toggle="pill" href="#sidebar-user" role="tab" aria-controls="sidebar-user" aria-selected="false">
+                        ユーザ確認・登録
+                    </a>
+                    <a class="nav-link text-white" id="sidebar-layout-tab" data-bs-toggle="pill" href="#sidebar-layout" role="tab" aria-controls="sidebar-layout" aria-selected="false">
+                        ユーザ画面調整
+                    </a>
+                    <a class="nav-link text-white" id="sidebar-genre-tab" data-bs-toggle="pill" href="#sidebar-genre" role="tab" aria-controls="sidebar-genre" aria-selected="false">
+                        ジャンル管理
+                    </a>
+                    <a class="nav-link text-white" id="sidebar-filter-tab" data-bs-toggle="pill" href="#sidebar-filter" role="tab" aria-controls="sidebar-filter" aria-selected="false">
+                        フィルター設定
+                    </a>
+                    <a class="nav-link text-white" id="sidebar-sorting-tab" data-bs-toggle="pill" href="#sidebar-sorting" role="tab" aria-controls="sidebar-sorting" aria-selected="false">
+                        報告再振り分け
+                    </a>
+                    <a class="nav-link text-white" id="sidebar-linking-tab" data-bs-toggle="pill" href="#sidebar-linking" role="tab" aria-controls="sidebar-linking" aria-selected="false">
+                        セキュリティ対策紐付・追加
+                    </a>
+                    <hr>
+                </div>
+            </div>
+            <!-- ページ内容領域 -->
+            <div class="container-fluid tab-content"  style="overflow: scroll; overflow-y: scroll;">
+                <div class="tab-pane fade show active w-100 h-100" id="sidebar-analysis" role="tabpanel" aria-labelledby="sidebar-analysis-tab">
+                    <iframe class="w-100 h-100" src="{% url 'moticom:analysis' %}"></iframe>
+                </div>
+                <div class="tab-pane fade w-100 h-100" id="sidebar-user" role="tabpanel" aria-labelledby="sidebar-user-tab">
+                    <iframe class="w-100 h-100" src="{% url 'moticom:user' %}"></iframe>
+                </div>
+                <div class="tab-pane fade w-100 h-100" id="sidebar-layout" role="tabpanel" aria-labelledby="sidebar-layout-tab">
+                    <iframe class="w-100 h-100" src="{% url 'moticom:layout' %}"></iframe>
+                </div>
+                <div class="tab-pane fade w-100 h-100" id="sidebar-genre" role="tabpanel" aria-labelledby="sidebar-genre-tab">
+                    <iframe class="w-100 h-100" src="{% url 'moticom:genre_manage' %}"></iframe>
+                </div>
+                <div class="tab-pane fade w-100 h-100" id="sidebar-filter" role="tabpanel" aria-labelledby="sidebar-filter-tab">
+                    <iframe class="w-100 h-100" src="{% url 'moticom:filter' %}"></iframe>
+                </div>
+                <div class="tab-pane fade w-100 h-100" id="sidebar-sorting" role="tabpanel" aria-labelledby="sidebar-sorting-tab">
+                    <iframe class="w-100 h-100" src="{% url 'moticom:sorting' %}"></iframe>
+                </div>
+                <div class="tab-pane fade w-100 h-100" id="sidebar-linking" role="tabpanel" aria-labelledby="sidebar-linking-tab">
+                    <iframe class="w-100 h-100" src="{% url 'moticom:linking' %}"></iframe>
+                </div>
+            </div>
+        </main>
+        <!-- フッター -->
+        <footer class="footer d-flex align-items-center mt-auto py-3 text-white-50" style="background-color:rgb(255, 150, 128);">
+            <small>&copy; 2021 奥原PBL</small>
+        </footer>
+    </body>
 {% endblock content %}

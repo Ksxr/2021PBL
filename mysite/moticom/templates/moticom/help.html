@@ -1,15 +1,12 @@
+{% extends 'moticom/base.html' %}
+
 {% load i18n static %}
-<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" style="height: 100%;">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="{% static 'moticom/css/bootstrap.min.css' %}">
-    </head>
+
+{% block content %}
     <body>
         <div class="container">
             <h2 class="mt-4 border-bottom">ヘルプ</h2>
             <div></div>
         </div>
     </body>
-</html>
+{% endblock content %}
