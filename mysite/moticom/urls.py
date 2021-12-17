@@ -22,9 +22,11 @@ urlpatterns = [
     #path('accounts/password_change/done', auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_finish.html'), name='password_change_done'), 
     
     #管理者用ページ↓
-    path('admin', views.AdminView.as_view(), name='admin'),
+    path('admin', views.AdminView, name='admin'),
     path('analysis', views.AnalysisView.as_view(), name='analysis'),
     path('admin_board', views.Admin_BoardView, name='admin_board'),
+    path('admin_genre_display', views.admin_genre_display, name='admin_genre_display'),
+    path('delete_post', views.DeletePost, name='delete_post'),
     path('delete_comment', views.DeleteComment, name='delete_comment'),
     path('user', views.UserView.as_view(), name='user'),
     path('layout', views.LayoutView.as_view(), name='layout'),
@@ -35,6 +37,8 @@ urlpatterns = [
     path('delete_NGword', views.delete_NGword, name='delete_NGword'),
     path('sorting', views.sorting, name='sorting'),
     path('linking', views.LinkingView.as_view(), name='linking'),
+    path('switch_link', views.Switch_link, name='switch_link'),
+    path('DeleteKeyWord', views.DeleteKeyWord, name='DeleteKeyWord'),
     path('cm_create', views.Cm_CreateView.as_view(), name='cm_create'),
     path('create', views.CreativeControlMeasureView.as_view(), name='create'),#正しいところに移ったらcm_createに修正
     path('<int:pk>/update', views.UpdateControlMeasureView.as_view(), name='update'), #正しいところに移ったらcm_updateに修正

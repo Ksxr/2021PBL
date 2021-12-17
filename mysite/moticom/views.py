@@ -162,12 +162,15 @@ class HelpView(TemplateView):
     template_name = 'moticom/help.html'
     
 #管理者用（別アプリに分ける予定）
+@login_required
+def AdminView(request):
+    return render(request, 'moticom/admin.html')
+#class AdminView(TemplateView):
+#    template_name = 'moticom/admin.html'
 #
-class AdminView(TemplateView):
-    template_name = 'moticom/admin.html'
-#
-class AnalysisView(TemplateView):
+class AnalysisView(ListView):
     template_name = 'moticom/analysis.html'
+    model = ControlMeasure
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -201,10 +204,26 @@ def Admin_BoardView(request):
     
     context = {
         'report_list': queryset,
+        'genre_list':Genre.objects.all(),
         'form': comment
     }
     return render(request, 'moticom/admin_board.html', context)
+#ジャンル別表示
+def admin_genre_display(request):
+    if request.method == 'GET':
+        context = {
+                   'report_list':Report.objects.filter(genre_id=request.GET.get('genre_id')).order_by('-created_at'),
+                   'genre_list':Genre.objects.all(),
+                   'form':CreateComment()
+                   }
+        return render(request, 'moticom/admin_board.html', context)
 
+#投稿削除用
+def DeletePost(request):
+    if request.method == 'POST':
+        Report.objects.get(id=request.POST.get('post_id')).delete()
+    return redirect('moticom:admin_board')
+    
 #コメント削除用
 def DeleteComment(request):
     if request.method == 'POST':
@@ -295,7 +314,7 @@ def sorting(request):
     params = {'report_list':report_list}
     return render(request, 'moticom/sorting.html', params)
 
-#
+#キーワード設定
 class LinkingView(FormView):
     template_name = 'moticom/linking.html'
     model = KeyWord
@@ -310,7 +329,26 @@ class LinkingView(FormView):
     def get_context_data(self):
         context = super().get_context_data()
         context['keyword_list'] = KeyWord.objects.all()
+        context['report_list'] = Report.objects.all()
+        context['cm_list'] = ControlMeasure.objects.all()
         return context
+        
+def Switch_link(request):
+    if request.method == 'POST':
+        try:
+            request.POST.get('cm_id')
+        except NoValue:
+            return redirect('moticom:linking')
+        rep = Report.objects.get(id=request.POST.get('report_id'))
+        rep.cm_id = ControlMeasure.objects.get(id=request.POST.get('cm_id'))
+        rep.save()
+    return redirect('moticom:linking')
+
+def DeleteKeyWord(request):
+    if request.method == 'POST':
+        KeyWord.objects.get(id=request.POST.get('key_id')).delete()
+    return redirect('moticom:linking')
+
 #
 class Cm_CreateView(ListView):
     template_name = 'moticom/cm_create.html'

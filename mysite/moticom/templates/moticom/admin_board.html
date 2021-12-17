@@ -5,36 +5,78 @@
 {% block content %}
     <body>
         <div class="container">
-            <h2 class="mt-2 border-bottom pb-2">投稿掲示板</h2>
-            <div class="d-flex flex-column pt-3">
+            <div class="mt-2 pb-1">
+                <h2 class="float-start">投稿掲示板</h2>
+                <div class="dropdown float-end">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    ジャンル別表示
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for genre in genre_list %}
+                        <form action="{% url 'moticom:admin_genre_display' %}" method = "get">
+                            <li>
+                            <input type="hidden" name="genre_id" value="{{ genre.id }}">
+                            <input type="submit" class="dropdown-item" value="{{ genre }}">
+                            </li>
+                        </form>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="d-flex flex-column pt-3 border-top">
                  {% if report_list %}
                         {% for report in report_list %}
-                            <div class="card ps-3 pb-3 mt-0 mb-0 small lh-sm border-bottom" style="background: rgb(150, 200, 200)">
-                                <strong class="d-block">@{{ report.user_id }}</strong>
-                                <p>{{ report.report_text }}</p>
-                                {% for comment in report.comment_set.all %}
-                                <div>{{ comment.comment_text }} 
-                                    <form action="{% url 'moticom:delete_comment' %}" method='post'>
-                                        {% csrf_token %}
-                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                        <input type="submit" value="削除"class="btn btn-primary" role="button">
-                                    </form>
-                                </div>
-                                {% endfor %}
-                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample{{report.id}}" role="button"
-                                aria-expanded="false" aria-controls="multiCollapseExample{{report.id}}">コメントする</a>
-                                <div class="collapse multi-collapse" id="multiCollapseExample{{report.id}}">
-                                    <div class="card card-body">
-                                        <div class="mb-3">
-                                            <label for="formGroupExampleInput" class="form-label">コメント</label>
-                                            <form action="{% url 'moticom:admin_board' %}" method='post'>
+                            <div class="card-group">
+                                <div class="card d-block ps-3 pb-3 mt-0 mb-0 small lh-sm border-bottom" style="background: rgb(150, 200, 200)">
+                                    <div class="row">
+                                        {% if report.anonymous %}
+                                        <strong class="d-block">@匿名</strong>
+                                        {% else %}
+                                        <strong class="d-block">@{{ report.user_id }}</strong>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            {{ report.report_text }}
+                                        </div>
+                                        <div class="col">
+                                            <form action="{% url 'moticom:delete_post' %}" method='post'>
                                                 {% csrf_token %}
-                                                {{ form }}
-                                                <input type="hidden" name="report_id" value="{{ report.id }}">
-                                                <div style="padding-top: 20px;">
-                                                    <input type="submit" value="送信"class="btn btn-primary" role="button">
-                                                </div>
+                                                <input type="hidden" name="post_id" value="{{ report.id }}">
+                                                <input type="submit" value="投稿削除" class="btn btn-primary " role="button">
                                             </form>
+                                        </div>
+                                    </div>
+                                    {% for comment in report.comment_set.all %}
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ comment.comment_text }}
+                                        </div>
+                                        <div class="col">
+                                            <form action="{% url 'moticom:delete_comment' %}" method='post'>
+                                                {% csrf_token %}
+                                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                                <input type="submit" value="コメント削除" class="btn btn-primary " role="button">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample{{report.id}}" role="button"
+                                    aria-expanded="false" aria-controls="multiCollapseExample{{report.id}}">コメントする</a>
+                                    <div class="collapse multi-collapse" id="multiCollapseExample{{report.id}}">
+                                        <div class="card card-body">
+                                            <div class="mb-3">
+                                                <label for="formGroupExampleInput" class="form-label">コメント</label>
+                                                <form action="{% url 'moticom:admin_board' %}" method='post'>
+                                                    {% csrf_token %}
+                                                    {{ form }}
+                                                    <input type="hidden" name="report_id" value="{{ report.id }}">
+                                                    <div style="padding-top: 20px;">
+                                                        <input type="submit" value="送信"class="btn btn-primary" role="button">
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

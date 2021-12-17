@@ -6,22 +6,24 @@
     <body>
          <!-- help から正しいところに移ったら cm_create に修正 -->
         <a class="btn btn-primary" href="{% url 'moticom:create' %}" role="button">管理策追加</a>
-       <table border="1">
-            <tr>
-                <th>管理策名</th>
-                <th>管理策</th>
-                <th>ジャンル</th>
-                <th>編集</th>
-            </tr>
-            {% for controlmeasure in object_list %}
-            <tr>
-                <td>{{ controlmeasure.cm_name }}</td>
-                <td>{{ controlmeasure.cm_contents }}</td>
-                <td>{{ controlmeasure.genre_id }}</td>
-                <!-- help から正しいところに移ったら cm_update に修正 -->
-                <th><a href="{% url 'moticom:update' controlmeasure.pk %}">編集</a></th>
-            </tr>
-            {% endfor %}
-        </table>
+        <div class="overflow-auto">
+            <table class="table table-striped" border="1">
+                <tr>
+                    <th scope="col">管理策名</th>
+                    <th scope="col">管理策</th>
+                    <th scope="col">ジャンル</th>
+                    <th scope="col">編集</th>
+                </tr>
+                {% for controlmeasure in object_list %}
+                <tr>
+                    <th scope="row">{{ controlmeasure.cm_name }}</th>
+                    <td>{{ controlmeasure.cm_contents }}</td>
+                    <td>{{ controlmeasure.genre_id }}</td>
+                    <!-- help から正しいところに移ったら cm_update に修正 -->
+                    <th><a class="btn btn-primary" href="{% url 'moticom:update' controlmeasure.pk %}">編集</a></th>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </body>
 {% endblock content %}

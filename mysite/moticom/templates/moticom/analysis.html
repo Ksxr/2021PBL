@@ -31,85 +31,27 @@
             </div>
         </div>
         <div class="row" style="padding-top: 50px; ">
-            <div class="col-md-8 col-md-offset-2">
-                <h7>データ一覧</h7>
+            <div class="col col-md-offset-2">
+                <h7>管理策一覧</h7>
                 <div class="overflow-auto">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">name</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Email</th>
+                                <th scope="col">管理策ID</th>
+                                <th scope="col">管理策名</th>
+                                <th scope="col">管理策内容</th>
+                                <th scope="col">ジャンル</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for cm in object_list %}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Taro</td>
-                                <td>Suzuki</td>
-                                <td>suzuki@sample.com</td>
+                                <th scope="row">{{ cm.id }}</th>
+                                <td>{{ cm.cm_name }}</td>
+                                <td>{{ cm.cm_contents }}</td>
+                                <td>{{ cm.genre_id }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Yuko</td>
-                                <td>Tanaka</td>
-                                <td>tanaka@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Zin</td>
-                                <td>Kato</td>
-                                <td>kato@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Taro</td>
-                                <td>Suzuki</td>
-                                <td>suzuki@sample.com</td>
-                                </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Yuko</td>
-                                <td>Tanaka</td>
-                                <td>tanaka@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Zin</td>
-                                <td>Kato</td>
-                                <td>kato@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Yuko</td>
-                                <td>Tanaka</td>
-                                <td>tanaka@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Zin</td>
-                                <td>Kato</td>
-                                <td>kato@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Taro</td>
-                                <td>Suzuki</td>
-                                <td>suzuki@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Yuko</td>
-                                <td>Tanaka</td>
-                                <td>tanaka@sample.com</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Zin</td>
-                                <td>Kato</td>
-                                <td>kato@sample.com</td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

@@ -5,8 +5,7 @@
 {% block extra_css %}
 <style>
     div.overflow-auto {
-        width: 700px;
-        height: 200px;
+        height: 300px;
         overflow: auto;
     }
 </style>
@@ -14,7 +13,7 @@
 
 {% block content %}
  <body>
-    <div class="container gx-5" style="padding: 10px 10px 10px 10px;">
+    <div class="container" style="padding: 10px 10px 10px 10px;">
         <h2 class="mt-2 border-bottom pb-2">セキュリティ対策振り分けキーワード追加設定</h2>
         <div style="padding-top: 20px;">
             <div class="row">
@@ -27,14 +26,22 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">キーワード</th>
                                     <th scope="col">管理策名</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for cm in keyword_list %}
+                                {% for key in keyword_list %}
                                 <tr>
-                                    <th scope="row">{{ cm.id }}</th>
-                                    <td>{{ cm.key_words }}</td>
-                                    <td>{{ cm.cm_id }}</td>
+                                    <th scope="row">{{ key.id }}</th>
+                                    <td>{{ key.key_words }}</td>
+                                    <td>{{ key.cm_id }}</td>
+                                    <th>
+                                        <form action="{% url 'moticom:DeleteKeyWord' %}" method='post'>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="key_id" value="{{ key.id }}">
+                                            <input type="submit" value="削除" class="btn btn-primary " role="button">
+                                        </form>
+                                    </th>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -56,6 +63,42 @@
                     <input type="submit" value="登録" class="btn btn-primary" role="button">
                 </div>
             </form>
+        </div>
+        <div>
+            <h5 style="padding-top: 20px; padding-bottom: 10px;">投稿の管理策再振り分け</h5>
+            <div class="overflow-auto">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="15%"scope="col">ジャンル</th>
+                            <th width="50%" scope="col">投稿内容</th>
+                            <th width="20%" scope="col">管理策名</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for report in report_list %}
+                        <tr>
+                            <th scope="row">{{ report.genre_id }}</th>
+                            <td width="500">{{ report.report_text }}</td>
+                            <td>{{ report.cm_id }}</td>
+                            <th>
+                                <form action="{% url 'moticom:switch_link' %}" method='post'>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="report_id" value="{{ report.id }}">
+                                    <select name='cm_id'>
+                                        {% for cm in cm_list %}
+                                        <option value="{{ cm.id }}">{{ cm.cm_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="submit" value="変更" class="btn btn-primary " role="button">
+                                </form>
+                            </th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>
