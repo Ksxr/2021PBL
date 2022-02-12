@@ -5,6 +5,7 @@
 {% block extra_css %}
 <style>
     div.overflow-auto {
+        min-width:95%;
         height: 300px;
         overflow: auto;
     }
@@ -17,7 +18,7 @@
         <h2 class="mt-2 border-bottom pb-2">セキュリティ対策振り分けキーワード追加設定</h2>
         <div style="padding-top: 20px;">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col col-md-offset-2">
                     <h5 style="padding-bottom: 10px;">キーワードリスト</h5>
                     <div class="overflow-auto">
                         <table class="table table-striped">
@@ -39,7 +40,7 @@
                                         <form action="{% url 'moticom:DeleteKeyWord' %}" method='post'>
                                             {% csrf_token %}
                                             <input type="hidden" name="key_id" value="{{ key.id }}">
-                                            <input type="submit" value="削除" class="btn btn-primary " role="button">
+                                            <input type="submit" value="削除" class="btn btn-danger " role="button">
                                         </form>
                                     </th>
                                 </tr>

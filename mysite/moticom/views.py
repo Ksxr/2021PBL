@@ -335,10 +335,6 @@ class LinkingView(FormView):
         
 def Switch_link(request):
     if request.method == 'POST':
-        try:
-            request.POST.get('cm_id')
-        except NoValue:
-            return redirect('moticom:linking')
         rep = Report.objects.get(id=request.POST.get('report_id'))
         rep.cm_id = ControlMeasure.objects.get(id=request.POST.get('cm_id'))
         rep.save()

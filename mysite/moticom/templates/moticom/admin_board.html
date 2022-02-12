@@ -27,7 +27,7 @@
             <div class="d-flex flex-column pt-3 border-top">
                  {% if report_list %}
                         {% for report in report_list %}
-                            <div class="card-group">
+                            <div>
                                 <div class="card d-block ps-3 pb-3 mt-0 mb-0 small lh-sm border-bottom" style="background: rgb(150, 200, 200)">
                                     <div class="row">
                                         {% if report.anonymous %}
@@ -44,27 +44,34 @@
                                             <form action="{% url 'moticom:delete_post' %}" method='post'>
                                                 {% csrf_token %}
                                                 <input type="hidden" name="post_id" value="{{ report.id }}">
-                                                <input type="submit" value="投稿削除" class="btn btn-primary " role="button">
+                                                <input type="submit" value="投稿削除" class="btn btn-danger" role="button">
                                             </form>
                                         </div>
                                     </div>
-                                    {% for comment in report.comment_set.all %}
-                                    <div class="row">
-                                        <div class="col">
-                                            {{ comment.comment_text }}
+                                    {% if report.comment_set.all %}
+                                        <div class="card" style="background: rgb(150, 200, 200)">
+                                        <p>管理者のコメント</p>
+                                        {% for comment in report.comment_set.all %}
+                                        <div class="card" style="background: rgb(150, 200, 200)">
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    {{ comment.comment_text }}
+                                                </div>
+                                                <div class="col">
+                                                    <form action="{% url 'moticom:delete_comment' %}" method='post'>
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                                        <input type="submit" value="コメント削除" class="btn btn-primary btn-sm" role="button">
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <form action="{% url 'moticom:delete_comment' %}" method='post'>
-                                                {% csrf_token %}
-                                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                                <input type="submit" value="コメント削除" class="btn btn-primary " role="button">
-                                            </form>
-                                        </div>
+                                        {% endfor %}
                                     </div>
-                                    {% endfor %}
-                                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample{{report.id}}" role="button"
+                                    {% endif %}
+                                    <a class="btn btn-primary btn-sm" style="hieght:30px; width:80px"  data-bs-toggle="collapse" href="#multiCollapseExample{{report.id}}" role="button"
                                     aria-expanded="false" aria-controls="multiCollapseExample{{report.id}}">コメントする</a>
-                                    <div class="collapse multi-collapse" id="multiCollapseExample{{report.id}}">
+                                    <div class="collapse multi-collapse" style="background: rgb(150, 200, 200)" id="multiCollapseExample{{report.id}}">
                                         <div class="card card-body">
                                             <div class="mb-3">
                                                 <label for="formGroupExampleInput" class="form-label">コメント</label>
@@ -90,11 +97,11 @@
             </div>
         </div>
         <script>
-        var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+        var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'));
         var collapseList = collapseElementList.map(function (collapseEl) {
-                                                    return new bootstrap.Collapse(collapseEl)
+                                                    return new bootstrap.Collapse(collapseEl);
                                                     }
-                                                   )
+                                                   );
         </script>
     </body>
 {% endblock content %}

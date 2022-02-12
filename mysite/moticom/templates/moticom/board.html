@@ -35,6 +35,9 @@
                                 <strong>@{{ report.user_id }}</strong>
                                 {% endif %}
                                 <p>{{ report.report_text }}</p>
+                                {% if report.comment_set.all %}
+                                <p>管理者のコメント</p>
+                                {% endif %}
                                 {% for comment in report.comment_set.all %}
                                     <p>{{ comment.comment_text }} </p>
                                 {% endfor %}
